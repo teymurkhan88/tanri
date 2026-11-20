@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Panel settings | Vega</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #030611;
+            --card-bg: rgba(10, 16, 33, 0.75);
+            --card-border: rgba(0, 234, 255, 0.14);
+            --cyan: #00eaff;
+            --blue: #2a69ff;
+            --purple: #8338ec;
+            --pink: #ff007f;
+            --text-main: #f8fafc;
+            --text-muted: #7b8fa7;
+            --input-bg: rgba(4, 8, 20, 0.85);
+            --success: #00f098;
+            --danger: #ff477e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            font-family: Vazirmatn, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(0, 234, 255, 0.12), transparent 35%),
+                radial-gradient(circle at 85% 20%, rgba(131, 56, 236, 0.14), transparent 40%),
+                radial-gradient(circle at 50% 85%, rgba(0, 120, 255, 0.08), transparent 45%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px 16px 60px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Grid */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 234, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 234, 255, 0.025) 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TOPBAR / HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(25px);
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-logo {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 234, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.2);
+            object-fit: cover;
+        }
+
+        .header-title h1 {
+            font-size: 18px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fff, var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title p {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 14px;
+            background: rgba(0, 234, 255, 0.06);
+            border: 1px solid rgba(0, 234, 255, 0.2);
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            transition: 0.25s;
+        }
+
+        .btn-back:hover {
+            background: rgba(0, 234, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-back svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* GRID SYSTEM */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* CARDS */
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            backdrop-filter: blur(25px);
+            padding: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 234, 255, 0.3);
+        }
+
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(0, 234, 255, 0.08);
+            border: 1px solid rgba(0, 234, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan);
+        }
+
+        .card-title-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .card-title h2 {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .card-title p {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .badge-status {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(0, 234, 255, 0.06);
+            border: 1px solid rgba(0, 234, 255, 0.2);
+            color: var(--cyan);
+            letter-spacing: 0.5px;
+        }
+
+        /* FORM ELEMENTS */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            height: 48px;
+            padding-inline-start: 16px;
+            padding-inline-end: 50px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            transition: 0.25s;
+        }
+
+        input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 234, 255, 0.15);
+        }
+
+        input::placeholder {
+            color: #435269;
+            font-size: 12px;
+        }
+
+        .input-action {
+            position: absolute;
+            right: 12px;
+            inset-inline-end: 12px;
+            right: auto;
+            background: none;
+            border: none;
+            color: #556882;
+            cursor: pointer;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .input-action:hover {
+            color: var(--cyan);
+        }
+
+        .input-action svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .helper-text {
+            margin-top: 6px;
+            font-size: 10px;
+            color: #556882;
+            line-height: 1.5;
+        }
+
+        .helper-text a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        /* CURRENT USER CHIP */
+        .user-chip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(0, 234, 255, 0.03);
+            border: 1px solid rgba(0, 234, 255, 0.1);
+            border-radius: 14px;
+            margin-bottom: 18px;
+        }
+
+        .user-chip-name {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .user-chip-name strong {
+            color: var(--cyan);
+            font-size: 13px;
+            margin-right: 4px;
+        }
+
+        /* PASSWORD STRENGTH */
+        .strength-meter {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: 0.3s;
+        }
+
+        /* CARD ACTION BUTTON */
+        .card-btn-wrap {
+            margin-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 18px;
+        }
+
+        .btn-save {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.25s;
+        }
+
+        .btn-blue {
+            background: linear-gradient(100deg, #00d2ff, #1c5bf0);
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.15);
+        }
+
+        .btn-blue:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.35);
+        }
+
+        .btn-purple {
+            background: linear-gradient(100deg, #9d4edd, #6a0dad);
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.15);
+        }
+
+        .btn-purple:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(157, 78, 221, 0.35);
+        }
+
+        .btn-save:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .btn-save svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* MESSAGE BANNER */
+        .message-box {
+            display: none;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message-box.error {
+            display: block;
+            background: rgba(255, 71, 126, 0.1);
+            border: 1px solid rgba(255, 71, 126, 0.3);
+            color: var(--danger);
+        }
+
+        .message-box.success {
+            display: block;
+            background: rgba(0, 240, 152, 0.1);
+            border: 1px solid rgba(0, 240, 152, 0.3);
+            color: var(--success);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 820px) {
+            .header {
+                flex-wrap: wrap;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            .header-brand {
+                flex: 1 1 100%;
+                min-width: 0;
+                gap: 10px;
+            }
+            .header-title { min-width: 0; }
+            .header-title h1 {
+                font-size: 15px !important;
+                line-height: 1.4;
+            }
+            .header-title p {
+                font-size: 9px;
+                letter-spacing: .8px;
+            }
+            .header-logo {
+                width: 38px;height: 38px;
+                border-radius: 12px;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px 12px 40px;
+            }
+
+            .header {
+                padding: 14px 16px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* --- LTR / English layout fixes --- */
+        .card-header{
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .card-title{min-width:0;flex:1 1 210px;}
+        .card-title p{max-width:38ch;line-height:1.55;}
+        .badge-status{flex:0 0 auto;white-space:nowrap;}
+        .card-btn-wrap .btn-save,
+        .card-btn-wrap button{white-space:nowrap;}
+        .user-chip-name{line-height:1.7;}
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Vazirmatn:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="/static/glass.css">
+    <link rel="stylesheet" href="/static/{{ skin_css }}">
+</head>
+<body class="page-settings">
+
+<aside class="sidebar" id="sidebar">
+
+    <div>
+
+        <div class="brand">
+            <img src="/static/logo.png" alt="Vega" class="brand-logo">
+            <div class="brand-text">
+                <div class="brand-name">VEGA</div>
+                <div class="brand-sub">PANEL</div>
+            </div>
+        </div>
+
+        <a href="{{ P }}/dashboard" class="nav-item">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/></svg>
+            </span>
+            <span class="nav-text">
+                <b data-i18n="navDashboard">Dashboard</b>
+                <small data-i18n="navDashboardSub">Overview</small>
+            </span>
+        </a>
+
+        <a href="{{ P }}/users" class="nav-item">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <span class="nav-text">
+                <b data-i18n="navUsers">Users</b>
+                <small data-i18n="navUsersSub">Accounts</small>
+            </span>
+        </a>
+
+        <a href="{{ P }}/settings" class="nav-item active">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+            </span>
+            <span class="nav-text">
+                <b data-i18n="navSettings">Settings</b>
+                <small data-i18n="navSettingsSub">Core</small>
+            </span>
+        </a>
+        <a href="{{ P }}/logs" class="nav-item">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16a1.5 1.5 0 0 1 1.5 1.5v13A1.5 1.5 0 0 1 20 20H4a1.5 1.5 0 0 1-1.5-1.5v-13A1.5 1.5 0 0 1 4 4z"/><path d="M7 9l3 3-3 3"/><path d="M13 15h4"/></svg>
+            </span>
+            <span class="nav-text">
+                <b data-i18n="navLogs">Logs</b>
+                <small data-i18n="navLogsSub">Runtime</small>
+            </span>
+        </a>
+
+    </div>
+
+    <div class="sidebar-bottom">
+
+        <a href="{{ P }}/logout" class="nav-item logout">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </span>
+            <span class="nav-text">
+                <b data-i18n="navLogout">Logout</b>
+                <small data-i18n="navLogoutSub">Session</small>
+            </span>
+        </a>
+
+    </div>
+
+</aside>
+
+<div class="container">
+
+    <!-- TOPBAR -->
+    <header class="header">
+        <div class="header-brand">
+            <img src="/static/logo.png" alt="Vega Logo" class="header-logo">
+            <div class="header-title">
+                <h1 data-i18n="headTitle">System settings &amp; configuration</h1>
+                <p data-i18n="headSub">VEGA SYSTEM SETTINGS</p>
+            </div>
+        </div>
+        <div class="header-actions" style="display:flex;align-items:center;gap:10px;">
+        <button class="language-btn" id="languageBtn" type="button" onclick="toggleLanguage()">فارسی</button>
+        <a href="{{ P }}/dashboard" class="btn-back">
+            <svg viewBox="0 0 24 24">
+                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+            </svg>
+            <span data-i18n="back">Dashboard</span>
+        </a>
+        </div>
+    </header>
+
+    <div id="messageBox" class="message-box"></div>
+
+    <div class="grid">
+
+        <!-- CARD 1: ADMIN ACCOUNT & SECURITY FORM -->
+        <form id="securityForm" class="glass-card">
+            <div>
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-title-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12,12A5,5 0 0,0 17,7A5,5 0 0,0 12,2A5,5 0 0,0 7,7A5,5 0 0,0 12,12M12,14C8.13,14 4,16.09 4,20V22H20V20C20,16.09 15.87,14 12,14Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 data-i18n="c1Title">Admin security &amp; sign-in</h2>
+                            <p data-i18n="c1Sub">Change the primary username and password of the panel</p>
+                        </div>
+                    </div>
+                    <span class="badge-status">ROOT</span>
+                </div>
+
+                <div class="user-chip">
+                    <div class="user-chip-name">
+                        <span data-i18n="c1Chip">Current system admin:</span> <strong>{{ current_username }}</strong>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="c1User">New username</label>
+                    <div class="input-box">
+                        <input type="text" id="username" value="{{ current_username }}" placeholder="Admin username" data-i18n-ph="c1UserPh" required autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="c1CurPass">Current password</label>
+                    <div class="input-box">
+                        <input type="password" id="current_password" placeholder="Your current password" data-i18n-ph="c1CurPassPh" required autocomplete="current-password">
+                        <button type="button" class="input-action" onclick="togglePass('current_password', this)">
+                            <svg viewBox="0 0 24 24"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="c1NewPass">New password</label>
+                    <div class="input-box">
+                        <input type="password" id="password" placeholder="At least 4 characters" data-i18n-ph="c1NewPassPh" required autocomplete="new-password">
+                        <button type="button" class="input-action" onclick="togglePass('password', this)">
+                            <svg viewBox="0 0 24 24"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/></svg>
+                        </button>
+                    </div>
+                    <div class="strength-meter" id="strengthMeter">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label data-i18n="c1Confirm">Repeat the new password</label>
+                    <div class="input-box">
+                        <input type="password" id="confirm_password" placeholder="Repeat the new password" data-i18n-ph="c1ConfirmPh" required autocomplete="new-password">
+                        <button type="button" class="input-action" onclick="togglePass('confirm_password', this)">
+                            <svg viewBox="0 0 24 24"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-btn-wrap">
+                <button type="submit" id="saveSecurityBtn" class="btn-save btn-blue">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10A2,2 0 0,1 6,8H9V6A3,3 0 0,1 12,3A3,3 0 0,1 15,6V8H18M12,5A1,1 0 0,0 11,6V8H13V6A1,1 0 0,0 12,5Z"/>
+                    </svg>
+                    <span data-i18n="c1Save">Save security &amp; change password</span>
+                </button>
+            </div>
+        </form>
+
+        <!-- CARD 2: TELEGRAM BOT FORM -->
+        <form id="telegramForm" class="glass-card">
+            <div>
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-title-icon" style="color: #00c8ff; background: rgba(0, 200, 255, 0.08);">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 data-i18n="c2Title">Telegram bot</h2>
+                            <p data-i18n="c2Sub">Connect a Telegram bot for users and the admin</p>
+                        </div>
+                    </div>
+                    <span class="badge-status">BOT SERVICE</span>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="c2Token">Telegram bot token</label>
+                    <div class="input-box">
+                        <input type="text" id="tg_token" value="{{ telegram_token }}" placeholder="123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ">
+                    </div>
+                    <p class="helper-text" data-i18n-html="c2TokenHelp">Create the token with the official <a href="https://t.me/BotFather" target="_blank">@BotFather</a> bot in Telegram and paste it here.</p>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="c2AdminId">Admin chat ID (numeric)</label>
+                    <div class="input-box">
+                        <input type="text" id="tg_admin_id" value="{{ telegram_admin_id }}" placeholder="e.g. 584920184" data-i18n-ph="c2AdminIdPh">
+                    </div>
+                    <p class="helper-text" data-i18n-html="c2AdminIdHelp">You can get your numeric Telegram ID from the <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> bot.</p>
+                </div>
+
+                <div style="margin-top: 15px; padding: 12px; background: rgba(0, 234, 255, 0.03); border-radius: 12px; border: 1px dashed rgba(0, 234, 255, 0.15);">
+                    <p style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
+                        <span data-i18n="c2Note">💡 Bot capability: users can send their username or UUID to see the remaining traffic and days. With your admin chat ID you also get server stats and the user list.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card-btn-wrap">
+                <button type="submit" id="saveTelegramBtn" class="btn-save btn-purple">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,12L12,17V13H8V11H12V7L17,12Z"/>
+                    </svg>
+                    <span data-i18n="c2Save">Save Telegram bot settings</span>
+                </button>
+            </div>
+        </form>
+
+        <!-- CARD 3: SUBSCRIPTION ENDPOINT (PORT / TLS) -->
+        <form id="endpointForm" class="glass-card" style="grid-column:1 / -1;">
+            <div>
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-title-icon" style="color:#00f098;background:rgba(0,240,152,.08);">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M10.59 13.41a1 1 0 0 1 0 1.42l-2.3 2.29a2 2 0 1 1-2.83-2.83l2.3-2.29a1 1 0 1 1 1.41 1.42l-2.29 2.29a.4.4 0 0 0 .56.56l2.3-2.29a1 1 0 0 1 1.41 0zM13.41 10.59a1 1 0 0 1 0-1.42l2.3-2.29a2 2 0 1 1 2.83 2.83l-2.3 2.29a1 1 0 1 1-1.41-1.42l2.29-2.29a.4.4 0 0 0-.56-.56l-2.3 2.29a1 1 0 0 1-1.41 0zM8.46 15.54l7.08-7.08a1 1 0 0 1 1.42 1.42l-7.08 7.08a1 1 0 1 1-1.42-1.42z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 data-i18n="c3Title">Subscription link / port &amp; TLS</h2>
+                            <p data-i18n="c3Sub">Port and TLS state written into the subscription configs</p>
+                        </div>
+                    </div>
+                    <span class="badge-status">ENDPOINT</span>
+                </div>
+
+                <div class="user-chip">
+                    <div class="user-chip-name">
+                        <span data-i18n="c3Chip">Detected endpoint:</span> <strong>{{ det_host }}:{{ det_port }}</strong>
+                        ·
+                        <strong>{{ 'TLS on' if det_tls else 'no TLS' }}</strong>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="c3Port">Public port used in links (empty = auto / default 443)</label>
+                    <div class="input-box">
+                        <input type="text" id="sub_port" value="{{ sub_port }}" placeholder="443" inputmode="numeric">
+                        <span class="input-action" style="cursor:default;">PORT</span>
+                    </div>
+                    <p class="helper-text" data-i18n="c3PortHelp">If the panel sits behind Cloudflare or a reverse proxy on 443, keep 443 or leave it empty.</p>
+                </div>
+
+                <div class="form-group" style="margin-bottom:0;">
+                    <label data-i18n="c3Tls">TLS in subscription links</label>
+                    <div class="input-box">
+                        <select id="sub_tls" style="background:transparent;border:0;color:inherit;width:100%;outline:none;font:inherit;padding:12px 4px;">
+                            <option value="" {% if sub_tls == '' %}selected{% endif %} data-i18n="c3TlsAuto">Auto (default: on)</option>
+                            <option value="1" {% if sub_tls == '1' %}selected{% endif %} data-i18n="c3TlsOn">On — security=tls</option>
+                            <option value="0" {% if sub_tls == '0' %}selected{% endif %} data-i18n="c3TlsOff">Off — no TLS</option>
+                        </select>
+                    </div>
+                    <p class="helper-text" data-i18n-html="c3TlsHelp">The “on” mode adds <code>security=tls</code>, <code>sni</code>, <code>alpn</code> and <code>fp</code> to the configs.</p>
+                </div>
+            </div>
+
+            <div class="card-btn-wrap">
+                <button type="submit" id="saveEndpointBtn" class="btn-save btn-blue">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,12L12,17V13H8V11H12V7L17,12Z"/>
+                    </svg>
+                    <span data-i18n="c3Save">Save port &amp; TLS for subscription link</span>
+                </button>
+            </div>
+        </form>
+
+        <form class="glass-card" id="diagCard" style="grid-column:1 / -1;" onsubmit="return false;">
+            <div>
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-title-icon" style="color:#4da3ff;background:rgba(77,163,255,.08);">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 data-i18n="d1Title">System self-check</h2>
+                            <p data-i18n="d1Sub">Xray version, config validity, listening ports and nginx state</p>
+                        </div>
+                    </div>
+                    <span class="badge-status">DIAG</span>
+                </div>
+
+                <p class="helper-text" data-i18n="d1Help">Open the report in a new tab. Use it when a config does not connect: it shows which side is broken.</p>
+            </div>
+
+            <div class="card-btn-wrap">
+                <button type="button" class="btn-save btn-blue" onclick="window.open('{{ P }}/api/diag','_blank');">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z"/>
+                    </svg>
+                    <span data-i18n="d1Open">Open self-check report</span>
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ============================== i18n ============================== */
+
+const strings = {
+
+    en:{
+        navDashboard:"Dashboard", navDashboardSub:"Overview",
+        navUsers:"Users", navUsersSub:"Accounts",
+        navSettings:"Settings", navSettingsSub:"Core",
+        navLogs:"Logs", navLogsSub:"Runtime",
+        navLogout:"Logout", navLogoutSub:"Session",
+        headTitle:"System settings & configuration",
+        headSub:"VEGA SYSTEM SETTINGS",
+        back:"Dashboard",
+        c1Title:"Admin security & sign-in",
+        c1Sub:"Change the primary username and password of the panel",
+        c1Chip:"Current system admin:",
+        c1User:"New username", c1UserPh:"Admin username",
+        c1CurPass:"Current password", c1CurPassPh:"Your current password",
+        c1NewPass:"New password", c1NewPassPh:"At least 4 characters",
+        c1Confirm:"Repeat the new password", c1ConfirmPh:"Repeat the new password",
+        c1Save:"Save security & change password",
+        c2Title:"Telegram bot",
+        c2Sub:"Connect a Telegram bot for users and the admin",
+        c2Token:"Telegram bot token",
+        c2TokenHelp:'Create the token with the official <a href="https://t.me/BotFather" target="_blank">@BotFather</a> bot in Telegram and paste it here.',
+        c2AdminId:"Admin chat ID (numeric)", c2AdminIdPh:"e.g. 584920184",
+        c2AdminIdHelp:'You can get your numeric Telegram ID from the <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> bot.',
+        c2Note:"💡 Bot capability: users can send their username or UUID to see the remaining traffic and days. With your admin chat ID you also get server stats and the user list.",
+        c2Save:"Save Telegram bot settings",
+        c3Title:"Subscription link / port & TLS",
+        c3Sub:"Port and TLS state written into the subscription configs",
+        c3Chip:"Detected endpoint:",
+        c3Port:"Public port used in links (empty = auto / default 443)",
+        c3PortHelp:"If the panel sits behind Cloudflare or a reverse proxy on 443, keep 443 or leave it empty.",
+        c3Tls:"TLS in subscription links",
+        c3TlsAuto:"Auto (default: on)",
+        c3TlsOn:"On — security=tls",
+        c3TlsOff:"Off — no TLS",
+        c3TlsHelp:'The “on” mode adds <code>security=tls</code>, <code>sni</code>, <code>alpn</code> and <code>fp</code> to the configs.',
+        c3Save:"Save port & TLS for subscription link",
+        d1Title:"System self-check",
+        d1Sub:"Xray version, config validity, listening ports and nginx state",
+        d1Help:"Open the report in a new tab. Use it when a config does not connect: it shows which side is broken.",
+        d1Open:"Open self-check report",
+        saving:"saving…",
+        errUser:"Username must be at least 3 characters",
+        errPassShort:"The new password must be at least 4 characters",
+        errPassMatch:"The new password and its confirmation do not match",
+        errSaveSec:"Could not save the security settings",
+        okSec:"✓ Sign-in details updated. Redirecting to the login page…",
+        errSaveTg:"Could not save the Telegram bot settings",
+        okTg:"✓ Telegram bot settings updated.",
+        errPort:"Port must be a number between 1 and 65535",
+        errSaveEp:"Could not save the settings",
+        errNet:"Could not reach the server"
+    },
+
+    fa:{
+        navDashboard:"داشبورد", navDashboardSub:"نمای کلی",
+        navUsers:"کاربران", navUsersSub:"اکانت‌ها",
+        navSettings:"تنظیمات", navSettingsSub:"هسته",
+        navLogs:"گزارش‌ها", navLogsSub:"اجرا",
+        navLogout:"خروج", navLogoutSub:"نشست",
+        headTitle:"تنظیمات و پیکربندی سیستم",
+        headSub:"تنظیمات سیستم Vega",
+        back:"داشبورد",
+        c1Title:"امنیت و ورود ادمین",
+        c1Sub:"تغییر نام کاربری و رمز اصلی پنل",
+        c1Chip:"مدیر کنونی سیستم:",
+        c1User:"نام کاربری جدید", c1UserPh:"نام کاربری ادمین",
+        c1CurPass:"رمز عبور فعلی", c1CurPassPh:"رمز فعلی شما",
+        c1NewPass:"رمز عبور جدید", c1NewPassPh:"حداقل ۴ کاراکتر",
+        c1Confirm:"تکرار رمز عبور جدید", c1ConfirmPh:"تکرار رمز عبور جدید",
+        c1Save:"ذخیره امنیت و تغییر رمز",
+        c2Title:"دستیار تلگرام",
+        c2Sub:"اتصال ربات تلگرام برای کاربران و ادمین",
+        c2Token:"توکن ربات تلگرام",
+        c2TokenHelp:'توکن را از ربات رسمی <a href="https://t.me/BotFather" target="_blank">@BotFather</a> بسازید و اینجا قرار دهید.',
+        c2AdminId:"شناسه عددی اکانت ادمین", c2AdminIdPh:"مثلاً 584920184",
+        c2AdminIdHelp:'شناسه عددی تلگرام را از ربات <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> بگیرید.',
+        c2Note:"💡 قابلیت ربات: کاربران با فرستادن نام یا UUID خود باقی‌مانده حجم و زمان را می‌بینند. با چت‌آیدی ادمین، دکمه‌های آمار سرور و فهرست کاربران را خواهید داشت.",
+        c2Save:"ذخیره تنظیمات ربات تلگرام",
+        c3Title:"لینک ساب / پورت و TLS",
+        c3Sub:"پورت و وضعیت TLS که داخل کانفیگ‌های ساب نوشته می‌شود",
+        c3Chip:"مقصد تشخیص‌داده‌شده:",
+        c3Port:"پورت عمومی لینک‌ها (خالی = خودکار / پیش‌فرض 443)",
+        c3PortHelp:"اگر پنل پشت Cloudflare یا reverse proxy روی 443 است، همان 443 را بگذارید یا خالی بگذارید.",
+        c3Tls:"TLS در لینک‌های ساب",
+        c3TlsAuto:"خودکار (پیش‌فرض: روشن)",
+        c3TlsOn:"روشن — security=tls",
+        c3TlsOff:"خاموش — بدون TLS",
+        c3TlsHelp:'حالت «روشن» پارامترهای <code>security=tls</code>، <code>sni</code>، <code>alpn</code> و <code>fp</code> را اضافه می‌کند.',
+        c3Save:"ذخیره پورت و TLS لینک ساب",
+        d1Title:"خودبررسی سیستم",
+        d1Sub:"نسخهٔ Xray، اعتبار کانفیگ، پورت‌های باز و وضعیت nginx",
+        d1Help:"گزارش را در تب تازه باز می‌کند. وقتی کانفیگی وصل نمی‌شود، اینجا معلوم می‌شود مشکل از کدام سمت است.",
+        d1Open:"باز کردن گزارش خودبررسی",
+        saving:"در حال ذخیره…",
+        errUser:"نام کاربری باید حداقل ۳ کاراکتر باشد",
+        errPassShort:"رمز عبور جدید باید حداقل ۴ کاراکتر باشد",
+        errPassMatch:"رمز عبور جدید با تکرار آن یکسان نیست",
+        errSaveSec:"خطا در ذخیره تنظیمات امنیتی",
+        okSec:"✓ اطلاعات ورود تغییر کرد. در حال انتقال به صفحه ورود…",
+        errSaveTg:"خطا در ذخیره تنظیمات ربات تلگرام",
+        okTg:"✓ تنظیمات ربات تلگرام به‌روزرسانی شد.",
+        errPort:"پورت باید عددی بین ۱ و ۶۵۵۳۵ باشد",
+        errSaveEp:"خطا در ذخیره تنظیمات",
+        errNet:"خطا در ارتباط با سرور"
+    }
+};
+
+let currentLanguage = "en";
+try { currentLanguage = localStorage.getItem("vegaLanguage") || "en"; } catch(e){}
+if(currentLanguage !== "fa") currentLanguage = "en";
+
+function t(key){
+    const pack = strings[currentLanguage] || strings.en;
+    return pack[key] !== undefined ? pack[key] : (strings.en[key] || key);
+}
+
+function applyLanguage(){
+
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir  = currentLanguage === "fa" ? "rtl" : "ltr";
+    document.body.classList.toggle("rtl", currentLanguage === "fa");
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        el.textContent = t(el.getAttribute("data-i18n"));
+    });
+
+    document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        el.innerHTML = t(el.getAttribute("data-i18n-html"));
+    });
+
+    document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+        el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph")));
+    });
+
+    const btn = document.getElementById("languageBtn");
+    if(btn) btn.innerText = currentLanguage === "fa" ? "English" : "فارسی";
+}
+
+function toggleLanguage(){
+    currentLanguage = currentLanguage === "fa" ? "en" : "fa";
+    try { localStorage.setItem("vegaLanguage", currentLanguage); } catch(e){}
+    applyLanguage();
+}
+
+// رفرش وضعیت پورت/TLS خالی از کش مرورگر
+applyLanguage();
+
+const messageBox = document.getElementById("messageBox");
+const securityForm = document.getElementById("securityForm");
+const telegramForm = document.getElementById("telegramForm");
+const saveSecurityBtn = document.getElementById("saveSecurityBtn");
+const saveTelegramBtn = document.getElementById("saveTelegramBtn");
+const endpointForm = document.getElementById("endpointForm");
+const saveEndpointBtn = document.getElementById("saveEndpointBtn");
+const pwdInput = document.getElementById("password");
+const strengthMeter = document.getElementById("strengthMeter");
+const strengthBar = document.getElementById("strengthBar");
+
+function showMessage(text, type) {
+    messageBox.textContent = text;
+    messageBox.className = "message-box " + type;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function togglePass(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const svg = btn.querySelector("svg");
+    
+    if (input.type === "password") {
+        input.type = "text";
+        svg.innerHTML = '<path d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z"/>';
+    } else {
+        input.type = "password";
+        svg.innerHTML = '<path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>';
+    }
+}
+
+pwdInput.addEventListener("input", function() {
+    const val = this.value;
+    if (val.length === 0) {
+        strengthMeter.style.display = "none";
+        return;
+    }
+    strengthMeter.style.display = "block";
+    let score = 0;
+    if (val.length >= 4) score += 25;
+    if (val.length >= 8) score += 25;
+    if (/[0-9]/.test(val)) score += 25;
+    if (/[^A-Za-z0-9]/.test(val)) score += 25;
+
+    let color = "#ff477e";
+    if (score >= 75) color = "#00f098";
+    else if (score >= 50) score = 50, color = "#ffaa00";
+
+    strengthBar.style.width = score + "%";
+    strengthBar.style.backgroundColor = color;
+});
+
+// FORM 1 SUBMIT: Security & Admin Login
+securityForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const currentPassword = document.getElementById("current_password").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+
+    if (username.length < 3) {
+        showMessage(t("errUser"), "error");
+        return;
+    }
+
+    if (password.length < 4) {
+        showMessage(t("errPassShort"), "error");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showMessage(t("errPassMatch"), "error");
+        return;
+    }
+
+    saveSecurityBtn.disabled = true;
+    saveSecurityBtn.innerHTML = '<div class="spinner"></div> ' + t("saving") + '';
+
+    try {
+        const res = await fetch("{{ P }}/api/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                action: "security",
+                username: username,
+                password: password,
+                current_password: currentPassword
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.status !== "success") {
+            showMessage(data.message || t("errSaveSec"), "error");
+            saveSecurityBtn.disabled = false;
+            saveSecurityBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10A2,2 0 0,1 6,8H9V6A3,3 0 0,1 12,3A3,3 0 0,1 15,6V8H18M12,5A1,1 0 0,0 11,6V8H13V6A1,1 0 0,0 12,5Z"/></svg>' + t("c1Save");
+            return;
+        }
+
+        showMessage(t("okSec"), "success");
+
+        setTimeout(() => {
+            window.location.href = "{{ P }}/login";
+        }, 1500);
+
+    } catch (err) {
+        showMessage(t("errNet"), "error");
+        saveSecurityBtn.disabled = false;
+        saveSecurityBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10A2,2 0 0,1 6,8H9V6A3,3 0 0,1 12,3A3,3 0 0,1 15,6V8H18M12,5A1,1 0 0,0 11,6V8H13V6A1,1 0 0,0 12,5Z"/></svg>' + t("c1Save");
+    }
+});
+
+// FORM 2 SUBMIT: Telegram Bot
+telegramForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const tgToken = document.getElementById("tg_token").value.trim();
+    const tgAdminId = document.getElementById("tg_admin_id").value.trim();
+
+    saveTelegramBtn.disabled = true;
+    saveTelegramBtn.innerHTML = '<div class="spinner"></div> ' + t("saving") + '';
+
+    try {
+        const res = await fetch("{{ P }}/api/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                action: "telegram",
+                telegram_token: tgToken,
+                telegram_admin_id: tgAdminId
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.status !== "success") {
+            showMessage(data.message || t("errSaveTg"), "error");
+            saveTelegramBtn.disabled = false;
+            saveTelegramBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,12L12,17V13H8V11H12V7L17,12Z"/></svg>' + t("c2Save");
+            return;
+        }
+
+        showMessage(t("okTg"), "success");
+        saveTelegramBtn.disabled = false;
+        saveTelegramBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,12L12,17V13H8V11H12V7L17,12Z"/></svg>' + t("c2Save");
+
+    } catch (err) {
+        showMessage(t("errNet"), "error");
+        saveTelegramBtn.disabled = false;
+        saveTelegramBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,12L12,17V13H8V11H12V7L17,12Z"/></svg>' + t("c2Save");
+    }
+});
+
+// FORM 3 SUBMIT: Subscription endpoint (port / TLS)
+if (endpointForm) {
+    endpointForm.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const port = document.getElementById("sub_port").value.trim();
+        const tls  = document.getElementById("sub_tls").value;
+
+        if (port && (!/^[0-9]+$/.test(port) || Number(port) < 1 || Number(port) > 65535)) {
+            showMessage(t("errPort"), "error");
+            return;
+        }
+
+        saveEndpointBtn.disabled = true;
+        const original = saveEndpointBtn.innerHTML;
+        saveEndpointBtn.innerHTML = '<div class="spinner"></div> ' + t("saving") + '';
+
+        try {
+            const res = await fetch("{{ P }}/api/settings", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "endpoint", sub_port: port, sub_tls: tls })
+            });
+
+            const data = await res.json();
+
+            if (data.status === "success") {
+                showMessage(data.message, "success");
+            } else {
+                showMessage(data.message || t("errSaveEp"), "error");
+            }
+        } catch (err) {
+            showMessage(t("errNet"), "error");
+        } finally {
+            saveEndpointBtn.disabled = false;
+            saveEndpointBtn.innerHTML = original;
+        }
+    });
+}
+
+</script>
+
+</body>
+</html>

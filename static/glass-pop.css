@@ -1,0 +1,1103 @@
+/* ==========================================================================
+   VEGA — POP  ·  لایهٔ «سفید و رنگی» با حاشیهٔ مشکی و سایهٔ آفست
+   روی همان چیدمان/آیکون‌های نسخهٔ فعلی سوار می‌شود؛ فقط رنگ، حاشیه و سایه
+   عوض می‌شود. بعد از glass.css لود می‌شود.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- TOKENS */
+:root{
+    /* جوهر و نئون */
+    --ink:#0d0b10;
+    --paper:#f6f3fd;
+    --lime:#d6ff3f;
+    --magenta:#ff2d9b;
+    --violet:#7c3aed;
+    --cyanpop:#22d3ee;
+    --pinkpop:#f472b6;
+    --sun:#ffd166;
+    --hard:4px 4px 0 var(--ink);
+    --hard-lg:6px 6px 0 var(--ink);
+
+    /* بازنویسی توکن‌های پوسته */
+    --g-bg:#f6f3fd;
+    --g-bg-soft:#fbf9ff;
+    --g-card:#ffffff;
+    --g-card-2:#ffffff;
+    --g-dock:#3a0a5c;
+    --g-item:#ffffff;
+    --g-item-hi:#fbf7ff;
+    --g-line:rgba(13,11,16,.92);
+    --g-line-hi:#0d0b10;
+    --g-text:#0d0b10;
+    --g-dim:#3d3550;
+    --g-mute:#6f6784;
+    --g-shadow:var(--hard-lg);
+    --g-shadow-s:var(--hard);
+    --g-tint:rgba(13,11,16,.05);
+    --g-glow:rgba(255,45,155,.30);
+
+    --g-violet:#7c3aed;
+    --g-indigo:#5b21b6;
+    --g-cyan:#0e7490;
+    --g-emerald:#15803d;
+    --g-pink:#ff2d9b;
+    --g-amber:#b45309;
+    --g-rose:#e11d48;
+    --g-blue:#2563eb;
+
+    --input-bg:#ffffff;
+
+    /* ارتفاع واقعی داک (۱۲px پدینگ ×۲ + آیتم ~۱۰۶px) تا سرصفحه زیر داک نرود */
+    --g-dock-h:120px;
+
+    /* متغیرهای محلی قالب‌ها */
+    --bg:#f6f3fd;
+    --panel:#ffffff;
+    --line:rgba(13,11,16,.9);
+    --blue:#2563eb;
+    --cyan:#0e7490;
+    --text:#0d0b10;
+    --muted:#6f6784;
+    --green:#15803d;
+    --red:#e11d48;
+    --orange:#b45309;
+    --purple:#7c3aed;
+    --gold:#a16207;
+    --shadow:var(--hard);
+    --card-bg:#ffffff;
+    --card-border:#0d0b10;
+    --blue2:#2563eb;
+    --text-main:#0d0b10;
+    --text-muted:#6f6784;
+    --pink:#ff2d9b;
+    --success:#15803d;
+    --danger:#e11d48;
+    --card:#ffffff;
+    --card2:#ffffff;
+    --card2b:#ffffff;
+    --white:#0d0b10;
+}
+
+/* ------------------------------------------------------------------ BASE */
+html,body{
+    background:var(--paper) !important;
+    color:var(--ink) !important;
+}
+
+body{
+    background-image:
+        radial-gradient(circle at 10% 4%,rgba(214,255,63,.38),transparent 40%),
+        radial-gradient(circle at 92% 8%,rgba(255,45,155,.20),transparent 42%),
+        radial-gradient(circle at 82% 92%,rgba(124,58,237,.18),transparent 46%),
+        radial-gradient(circle at 16% 86%,rgba(34,211,238,.18),transparent 44%),
+        linear-gradient(180deg,#fdfbff 0%,#f4f0fd 55%,#f7f4ff 100%) !important;
+    background-attachment:fixed !important;
+    background-repeat:no-repeat !important;
+    color:var(--ink) !important;
+}
+
+/* بافت خط‌های مورب بسیار ملایم (همان حس کاغذ نسخهٔ رنگی) */
+body:before{
+    background-image:repeating-linear-gradient(135deg,rgba(13,11,16,.035) 0 2px,transparent 2px 16px) !important;
+    background-color:transparent !important;
+    opacity:1 !important;
+    filter:none !important;
+}
+
+::selection{background:var(--lime) !important;color:var(--ink) !important;}
+
+/* ------------------------------------------------------------------ DOCK */
+.sidebar{
+    background:linear-gradient(120deg,#3a0a5c,#5b1183 62%,#3a0a5c) !important;
+    border:0 !important;
+    border-bottom:3px solid var(--ink) !important;
+    box-shadow:0 6px 0 rgba(13,11,16,.10) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+}
+
+.sidebar .brand-logo{
+    border:2.5px solid var(--ink) !important;
+    border-radius:14px !important;
+    box-shadow:3px 3px 0 var(--lime) !important;
+    background:#fff !important;
+}
+.sidebar .brand::after{
+    background:var(--lime) !important;
+    opacity:1 !important;
+    box-shadow:none !important;
+}
+.sidebar .brand-name{color:#fff !important;letter-spacing:.5px !important;}
+.sidebar .brand-sub{color:#d9c6f2 !important;}
+
+/* آیتم‌های داک */
+.sidebar .nav-item{
+    background:rgba(255,255,255,.06) !important;
+    border:2px solid rgba(255,255,255,.28) !important;
+    border-radius:14px !important;
+    box-shadow:none !important;
+    color:#f2e9ff !important;
+}
+.sidebar .nav-item:hover{
+    background:rgba(255,255,255,.14) !important;
+    border-color:var(--lime) !important;
+}
+.sidebar .nav-text,
+.sidebar .nav-text b{color:#f2e9ff !important;font-weight:800 !important;}
+.sidebar .nav-text small{color:rgba(255,255,255,.60) !important;}
+
+.sidebar .nav-icon,
+.sidebar .nav-item:nth-of-type(n) .nav-icon{
+    background:rgba(255,255,255,.14) !important;
+    border:1.5px solid rgba(255,255,255,.32) !important;
+    border-radius:11px !important;
+    box-shadow:none !important;
+}
+.sidebar .nav-icon svg{color:#fff !important;opacity:1 !important;}
+
+/* آیتم فعال: قرص لیمویی با حاشیهٔ مشکی و سایهٔ آفست */
+.sidebar .nav-item.active,
+.sidebar .nav-item:nth-of-type(2).active{
+    background:var(--lime) !important;
+    border:2.5px solid var(--ink) !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+}
+.sidebar .nav-item.active .nav-text,
+.sidebar .nav-item.active .nav-text b{color:var(--ink) !important;}
+.sidebar .nav-item.active .nav-text small{color:rgba(13,11,16,.62) !important;}
+
+.sidebar .nav-item.active .nav-icon,
+.sidebar .nav-item:nth-of-type(n).active .nav-icon{
+    background:var(--ink) !important;
+    border-color:var(--ink) !important;
+}
+.sidebar .nav-item.active .nav-icon svg{color:var(--lime) !important;}
+.sidebar .nav-item.active .nav-icon,
+.sidebar .nav-item.active .nav-icon svg{color:var(--lime) !important;}
+
+.sidebar .nav-item.logout{
+    background:rgba(255,45,155,.16) !important;
+    border-color:rgba(255,45,155,.62) !important;
+}
+.sidebar .nav-item.logout .nav-icon{background:rgba(255,45,155,.28) !important;border-color:rgba(255,45,155,.6) !important;}
+.sidebar .nav-item.logout .nav-icon svg{color:#ffb3d5 !important;}
+.sidebar .nav-item.logout:hover{background:rgba(255,45,155,.30) !important;border-color:#ff2d9b !important;}
+
+/* ---------------------------------------------------------------- APPBAR */
+.topbar{
+    background:linear-gradient(100deg,#ff2d9b 0%,#a21caf 44%,#7c3aed 100%) !important;
+    border:3px solid var(--ink) !important;
+    border-radius:22px !important;
+    box-shadow:var(--hard-lg) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+}
+.page-title h1{
+    color:#fff !important;
+    font-weight:900 !important;
+    letter-spacing:.4px !important;
+    text-shadow:2px 2px 0 rgba(13,11,16,.55) !important;
+}
+.page-title p{color:rgba(255,255,255,.92) !important;}
+
+/* آمار ریبون داخل نوار سرصفحه: روی گرادیان تیره، متن روشن */
+.topbar .g-ribbon-stats{border:0 !important;background:none !important;box-shadow:none !important;}
+.topbar .g-ribbon-stats span,
+.topbar .g-ribbon-stats > div > span{color:rgba(255,255,255,.80) !important;}
+.topbar .g-ribbon-stats b{color:#fff !important;}
+.topbar .g-ribbon-stats b.cyan{color:var(--cyanpop) !important;}
+.topbar .g-ribbon-stats b.emerald{color:var(--lime) !important;}
+.topbar .g-ribbon-stats > div + div::before{background:rgba(255,255,255,.35) !important;}
+
+/* عنوان ویجت‌ها داخل کارت سفید: مشکی پررنگ */
+.g-head h2,
+.online-head h2{
+    color:var(--ink) !important;
+    font-weight:900 !important;
+    letter-spacing:.4px !important;
+    text-shadow:none !important;
+}
+.online-head-right{color:var(--muted) !important;}
+.g-head .g-tag,
+.g-head .g-chip{color:var(--ink) !important;}
+
+.top-actions .theme-btn,
+.top-actions .language-btn,
+.language-btn{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    color:var(--ink) !important;
+    border-radius:12px !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+}
+.language-btn:hover{background:var(--lime) !important;color:var(--ink) !important;}
+
+.profile{
+    background:rgba(255,255,255,.18) !important;
+    border:2px solid rgba(255,255,255,.55) !important;
+    border-radius:14px !important;
+}
+.profile .avatar{
+    border:2.5px solid var(--ink) !important;
+    box-shadow:2px 2px 0 var(--lime) !important;
+}
+.profile-info strong{color:#fff !important;}
+.profile-info span{color:var(--lime) !important;}
+
+/* ---------------------------------------------------------------- CARDS  */
+.card,
+.users-card,
+.g-widget,
+.glass-card,
+.modal-box,
+.online-card{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:20px !important;
+    box-shadow:var(--hard-lg) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+}
+
+.card::after,
+.glass-card::after,
+.g-widget::after,
+.users-card::after,
+.g-widget::before{display:none !important;content:none !important;}
+
+/* هر کارت سایهٔ رنگی خودش: صورتی / فیروزه‌ای / بنفش / لیمویی */
+.g-grid > .g-widget:nth-child(1){box-shadow:6px 6px 0 var(--pinkpop) !important;}
+.g-grid > .g-widget:nth-child(2){box-shadow:6px 6px 0 var(--cyanpop) !important;}
+.g-grid > .g-widget:nth-child(3){box-shadow:6px 6px 0 var(--violet) !important;}
+.g-grid > .g-widget:nth-child(4){box-shadow:6px 6px 0 var(--lime) !important;}
+
+.stats > .stat:nth-child(1),
+.g-metrics > .g-metric:nth-child(1){box-shadow:5px 5px 0 var(--violet) !important;}
+.stats > .stat:nth-child(2),
+.g-metrics > .g-metric:nth-child(2){box-shadow:5px 5px 0 var(--cyanpop) !important;}
+.stats > .stat:nth-child(3),
+.g-metrics > .g-metric:nth-child(3){box-shadow:5px 5px 0 var(--magenta) !important;}
+.stats > .stat:nth-child(4),
+.g-metrics > .g-metric:nth-child(4){box-shadow:5px 5px 0 var(--lime) !important;}
+
+/* --------------------------------------------- اعداد بزرگ با هایلایت لیمو */
+.stat-value,
+.g-metric-l strong,
+.g-gauge-core strong,
+.circle-percent{
+    color:var(--ink) !important;
+    font-weight:900 !important;
+    text-shadow:none !important;
+}
+.stat-value,
+.g-metric-l strong{
+    display:inline-block !important;
+    padding:0 5px !important;
+    background:linear-gradient(180deg,transparent 46%,var(--lime) 46%,var(--lime) 92%,transparent 92%) !important;
+}
+.stat-value small,
+.g-metric-l strong small{color:var(--ink) !important;opacity:.65;}
+
+.stat-label,
+.g-metric-l > span{color:var(--muted) !important;font-weight:800 !important;}
+.stat-change,
+.g-metric-l em{color:var(--dim) !important;}
+.g-metric-l em svg{color:inherit !important;}
+
+.stat-icon{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:13px !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.stat-icon svg{color:var(--ink) !important;}
+.stat-icon.green{background:var(--lime) !important;}
+.stat-icon.green svg{color:var(--ink) !important;}
+.stat-icon.orange{background:var(--sun) !important;}
+.stat-icon.orange svg{color:var(--ink) !important;}
+.stat-icon.red{background:#ff5c8a !important;}
+.stat-icon.red svg{color:#fff !important;}
+
+/* ------------------------------------------------ STAT TILES (کارت‌های ریز) */
+.stat{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:16px !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+    overflow:hidden !important;
+}
+.stat-label{color:var(--muted) !important;font-weight:800 !important;}
+.stat-value{color:var(--ink) !important;}
+
+/* --------------------------------------------------------- USERS / ROWS  */
+.user-row{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:16px !important;
+    box-shadow:var(--hard) !important;
+}
+.user-row:hover{
+    background:#fff !important;
+    border-color:var(--ink) !important;
+    box-shadow:6px 6px 0 var(--violet) !important;
+}
+.user-meta strong{color:var(--ink) !important;}
+.user-meta small{color:var(--muted) !important;}
+
+.user-avatar{
+    background:var(--lime) !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+    box-shadow:none !important;
+}
+.user-avatar.online{
+    background:var(--cyanpop) !important;
+    border-color:var(--ink) !important;
+    color:var(--ink) !important;
+    box-shadow:none !important;
+}
+.user-avatar.online:after{border-color:#fff !important;}
+
+.toolbar input[type="text"],
+.search-box{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+}
+.search-box:focus,
+.toolbar input[type="text"]:focus{
+    border-color:var(--ink) !important;
+    box-shadow:3px 3px 0 var(--lime) !important;
+}
+
+.filter-tabs{
+    background:#f1ecfb !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:14px !important;
+}
+.filter-tab{color:var(--dim) !important;background:transparent !important;border-radius:10px !important;}
+.filter-tab.active{
+    background:var(--lime) !important;
+    color:var(--ink) !important;
+    border:2px solid var(--ink) !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+
+.online-count-badge{
+    background:var(--lime) !important;
+    border:2px solid var(--ink) !important;
+    color:var(--ink) !important;
+    border-radius:9px !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.live-dot{background:var(--lime) !important;box-shadow:0 0 0 2.5px var(--ink) !important;}
+
+/* کاربران آنلاین و ردیف‌های داخل کارت */
+.online-user{background:#fff !important;border:2.5px solid var(--ink) !important;border-radius:14px !important;}
+.online-user b{color:var(--ink) !important;}
+.online-user .usage{color:var(--muted) !important;}
+
+.traffic-text{color:var(--muted) !important;}
+.traffic-text b{color:var(--ink) !important;}
+.traffic-text .pct{color:var(--violet) !important;}
+.traffic-progress{background:#efeaf9 !important;border:2px solid var(--ink) !important;border-radius:99px !important;}
+.traffic-progress-bar{background:var(--lime) !important;border-radius:99px !important;}
+.traffic-progress-bar.warning{background:var(--sun) !important;}
+.traffic-progress-bar.danger{background:#ff4d6d !important;}
+
+.days-ok{color:#15803d !important;}
+.days-warning{color:#b45309 !important;}
+
+.badge{
+    background:#fff !important;
+    border:2px solid var(--ink) !important;
+    border-radius:8px !important;
+    color:var(--dim) !important;
+    font-weight:800 !important;
+}
+.badge.active{background:var(--lime) !important;color:var(--ink) !important;}
+.badge.expired{background:var(--sun) !important;color:var(--ink) !important;}
+.badge.disabled{background:#ff5c8a !important;color:#fff !important;}
+
+/* ---------------------------------------------------------------- BUTTONS */
+.g-btn,
+.btn,
+.btn-gray{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+    font-weight:800 !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+    transition:transform .12s ease,box-shadow .12s ease !important;
+}
+.g-btn:hover,
+.btn:hover,
+.btn-gray:hover{
+    background:#fff !important;
+    color:var(--ink) !important;
+    transform:translate(-1px,-1px) !important;
+    box-shadow:5px 5px 0 var(--ink) !important;
+}
+.g-btn svg{color:inherit !important;}
+
+.g-btn.solid,
+.btn-add,
+.btn-blue{
+    background:linear-gradient(100deg,var(--magenta),var(--violet)) !important;
+    border:2.5px solid var(--ink) !important;
+    color:#fff !important;
+    box-shadow:4px 4px 0 var(--ink) !important;
+}
+.g-btn.solid:hover,
+.btn-add:hover,
+.btn-blue:hover{filter:none !important;transform:translate(-1px,-1px) !important;box-shadow:6px 6px 0 var(--ink) !important;color:#fff !important;}
+.g-btn.solid svg{color:#fff !important;}
+
+.btn-green{background:var(--lime) !important;border:2.5px solid var(--ink) !important;color:var(--ink) !important;box-shadow:3px 3px 0 var(--ink) !important;}
+.btn-green:hover{background:var(--lime) !important;color:var(--ink) !important;}
+.btn-orange{background:var(--sun) !important;border:2.5px solid var(--ink) !important;color:var(--ink) !important;box-shadow:3px 3px 0 var(--ink) !important;}
+.btn-orange:hover{background:var(--sun) !important;color:var(--ink) !important;}
+.btn-red{background:#ff4d6d !important;border:2.5px solid var(--ink) !important;color:#fff !important;box-shadow:3px 3px 0 var(--ink) !important;}
+.btn-red:hover{background:#ff4d6d !important;color:#fff !important;}
+.btn-dark{background:var(--ink) !important;border:2.5px solid var(--ink) !important;color:#fff !important;box-shadow:3px 3px 0 var(--violet) !important;}
+.btn-dark:hover{background:var(--ink) !important;color:var(--lime) !important;}
+
+html body .btn.btn-blue{color:#fff !important;}
+html body .btn.btn-green{color:var(--ink) !important;}
+html body .btn.btn-orange{color:var(--ink) !important;}
+html body .btn.btn-red{color:#fff !important;}
+html body .btn.btn-dark{color:#fff !important;}
+
+/* --------------------------------------------------------------- WIDGETS */
+.g-dot{background:var(--ink) !important;box-shadow:none !important;}
+.g-dot.violet{background:var(--violet) !important;box-shadow:0 0 0 2px var(--ink) !important;}
+.g-dot.cyan{background:var(--cyanpop) !important;box-shadow:0 0 0 2px var(--ink) !important;}
+
+.g-ico{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.g-ico svg{color:var(--ink) !important;}
+.g-ico.cyan{background:var(--cyanpop) !important;}
+.g-ico.cyan svg{color:var(--ink) !important;}
+.g-ico.emerald{background:var(--lime) !important;}
+.g-ico.emerald svg{color:var(--ink) !important;}
+.g-ico.amber{background:var(--sun) !important;}
+.g-ico.amber svg{color:var(--ink) !important;}
+.g-ico.pink{background:var(--pinkpop) !important;}
+.g-ico.pink svg{color:var(--ink) !important;}
+.g-ico.rose{background:#ff5c8a !important;}
+.g-ico.rose svg{color:#fff !important;}
+.g-ico.violet{background:var(--violet) !important;}
+.g-ico.violet svg{color:#fff !important;}
+
+.g-item{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:14px !important;
+    box-shadow:none !important;
+}
+.g-item:hover{background:#fdfbff !important;border-color:var(--ink) !important;box-shadow:2px 2px 0 var(--lime) !important;}
+.g-item-t b{color:var(--ink) !important;}
+.g-item-t span{color:var(--muted) !important;}
+
+.g-bar-row{background:transparent !important;}
+.g-bar{
+    background:#f1ecfb !important;
+    border:2px solid var(--ink) !important;
+    border-radius:99px !important;
+    box-shadow:none !important;
+    overflow:hidden !important;
+}
+.g-bar i,
+.g-bar i.cyan{background:linear-gradient(90deg,var(--violet),var(--magenta)) !important;box-shadow:none !important;}
+.g-bar i.cyan{background:linear-gradient(90deg,#0ea5e9,var(--cyanpop)) !important;}
+.g-bar i.emerald{background:linear-gradient(90deg,#16a34a,var(--lime)) !important;}
+.g-bar i.amber{background:linear-gradient(90deg,#f59e0b,var(--sun)) !important;}
+.g-bar i.pink{background:linear-gradient(90deg,var(--magenta),var(--pinkpop)) !important;}
+.g-bar-top b{color:var(--ink) !important;}
+.g-bar-top em{color:var(--muted) !important;}
+
+.g-gauge .rg-bg{stroke:#ece6f8 !important;}
+.g-gauge .rg-fg{filter:none !important;}
+.g-gauge-core strong{color:var(--ink) !important;}
+.g-gauge-core span,
+.g-gauge-core em,
+.g-gauge-core strong small{color:var(--muted) !important;}
+
+.g-polar{
+    background:#fbf8ff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:16px !important;
+    box-shadow:none !important;
+}
+.g-polar-chart .pbg{stroke:rgba(13,11,16,.14) !important;}
+.g-polar-chart .p1{stroke:var(--magenta) !important;}
+.g-polar-chart .p2{stroke:var(--violet) !important;}
+.g-polar-chart .p3{stroke:#0e7490 !important;}
+.g-polar-chart circle{fill:#fff !important;stroke:var(--magenta) !important;}
+.g-polar-hub strong{color:var(--ink) !important;}
+.g-polar-hub span{color:var(--muted) !important;}
+.g-legend .lg b{color:var(--ink) !important;}
+.g-legend .lg small{color:var(--muted) !important;}
+.g-legend .lg span i{background:var(--ink) !important;}
+.g-legend .lg:nth-child(2) span i{background:var(--magenta) !important;}
+.g-legend .lg:nth-child(3) span i{background:var(--violet) !important;}
+
+.g-metric{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:18px !important;
+    box-shadow:var(--hard) !important;
+}
+.g-metric:hover{background:#fff !important;border-color:var(--ink) !important;}
+.g-metric-bar{background:#f1ecfb !important;border:2px solid var(--ink) !important;border-radius:99px !important;}
+.g-metric-bar i{background:var(--lime) !important;}
+.g-metric.cyan .g-metric-l strong,
+.g-metric.violet .g-metric-l strong,
+.g-metric.emerald .g-metric-l strong,
+.g-metric.amber .g-metric-l strong{color:var(--ink) !important;}
+
+.g-ribbon{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:18px !important;
+    box-shadow:6px 6px 0 var(--cyanpop) !important;
+}
+.g-ribbon-stats > div + div::before{background:rgba(13,11,16,.16) !important;}
+.g-ribbon-stats b{color:var(--ink) !important;}
+.g-ribbon-stats b.cyan{color:#0e7490 !important;}
+.g-ribbon-stats b.emerald{color:#15803d !important;}
+.g-ribbon-stats b.violet{color:var(--violet) !important;}
+.g-ribbon-stats span{color:var(--muted) !important;}
+
+.g-tag,
+.g-chip{
+    background:#fff !important;
+    border:2px solid var(--ink) !important;
+    border-radius:8px !important;
+    color:var(--ink) !important;
+    font-weight:800 !important;
+    box-shadow:none !important;
+}
+.g-tag.violet,.g-chip.violet{background:var(--violet) !important;color:#fff !important;}
+.g-tag.cyan,.g-chip.cyan{background:var(--cyanpop) !important;color:var(--ink) !important;}
+.g-tag.emerald,.g-chip.emerald{background:var(--lime) !important;color:var(--ink) !important;}
+.g-tag.amber,.g-chip.amber{background:var(--sun) !important;color:var(--ink) !important;}
+
+.g-head{border-bottom:2.5px solid var(--ink) !important;padding-bottom:12px !important;}
+.g-foot{color:var(--muted) !important;border-top:2px dashed rgba(13,11,16,.25) !important;}
+.g-foot b{color:var(--ink) !important;}
+.g-foot .ok{color:#15803d !important;}
+.g-empty{color:var(--muted) !important;}
+.g-mini b{color:var(--ink) !important;}
+.g-mini .dot{background:var(--ink) !important;}
+
+.g-scroll::-webkit-scrollbar{background:transparent !important;}
+.g-scroll::-webkit-scrollbar-thumb{background:var(--ink) !important;border-radius:99px !important;}
+
+/* ---------------------------------------------------------------- MODALS */
+.overlay{background:rgba(58,10,92,.55) !important;backdrop-filter:blur(4px) !important;}
+
+.modal,
+.modal-content,
+.modal-box{
+    background:#fff !important;
+    border:3px solid var(--ink) !important;
+    border-radius:22px !important;
+    box-shadow:10px 10px 0 var(--ink) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+}
+.modal-head{border-bottom:2.5px solid var(--ink) !important;padding-bottom:14px !important;}
+.modal-head h3{color:var(--ink) !important;font-weight:900 !important;}
+.modal-head .modal-sub{color:var(--muted) !important;}
+
+.close{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:10px !important;
+    color:var(--ink) !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.close:hover{background:var(--lime) !important;color:var(--ink) !important;border-color:var(--ink) !important;}
+
+.modal input,
+.modal select,
+.modal-box input,
+.modal-box select,
+.input,
+.slider-value,
+.summary-item,
+.config-box{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+}
+.modal input:focus,
+.input:focus{border-color:var(--ink) !important;box-shadow:3px 3px 0 var(--lime) !important;outline:none !important;}
+.modal input::placeholder{color:var(--muted) !important;}
+
+.form-group label{color:var(--dim) !important;font-weight:800 !important;}
+.form-group label .label-hint{color:var(--muted) !important;}
+.config-desc{color:var(--muted) !important;}
+.input-icon-btn{background:#fff !important;border:2.5px solid var(--ink) !important;color:var(--ink) !important;box-shadow:2px 2px 0 var(--ink) !important;}
+.input-icon-btn:hover{background:var(--lime) !important;border-color:var(--ink) !important;box-shadow:2px 2px 0 var(--ink) !important;}
+
+.slider-input{background:#f1ecfb !important;border:2px solid var(--ink) !important;height:8px !important;}
+.slider-input::-webkit-slider-thumb{background:var(--lime) !important;border:2.5px solid var(--ink) !important;box-shadow:none !important;}
+.slider-value{color:var(--ink) !important;}
+
+.preset{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:10px !important;
+    color:var(--dim) !important;
+    font-weight:800 !important;
+}
+.preset:hover{background:#fdfbff !important;color:var(--ink) !important;}
+.preset.active{background:var(--lime) !important;color:var(--ink) !important;border-color:var(--ink) !important;box-shadow:2px 2px 0 var(--ink) !important;}
+.preset.special{color:var(--violet) !important;}
+
+.summary-item .val{color:var(--ink) !important;}
+.summary-item .val small{color:var(--muted) !important;}
+.confirm-text{color:var(--dim) !important;}
+.sub-box{background:#fbf8ff !important;border:2.5px dashed rgba(13,11,16,.45) !important;border-radius:14px !important;}
+.sub-box label{color:var(--muted) !important;}
+
+.toast{
+    background:var(--ink) !important;
+    color:#fff !important;
+    border:2.5px solid var(--lime) !important;
+    border-radius:12px !important;
+    box-shadow:5px 5px 0 rgba(214,255,63,.55) !important;
+}
+
+/* -------------------------------------------------------------- SETTINGS */
+.page-settings,
+.page-settings .container{background:transparent !important;color:var(--ink) !important;}
+.page-settings .header{
+    background:linear-gradient(100deg,#ff2d9b 0%,#a21caf 44%,#7c3aed 100%) !important;
+    border:3px solid var(--ink) !important;
+    border-radius:22px !important;
+    box-shadow:var(--hard-lg) !important;
+    backdrop-filter:none !important;
+}
+.page-settings .header-logo{
+    border:2.5px solid var(--ink) !important;
+    box-shadow:3px 3px 0 var(--lime) !important;
+    filter:none !important;
+}
+.page-settings .header-title h1{
+    color:#fff !important;
+    -webkit-text-fill-color:#fff !important;
+    background:none !important;
+    text-shadow:2px 2px 0 rgba(13,11,16,.55) !important;
+    font-weight:900 !important;
+}
+.page-settings .header-title p{color:var(--lime) !important;}
+
+.page-settings .btn-back{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    color:var(--ink) !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+}
+.page-settings .btn-back:hover{background:var(--lime) !important;color:var(--ink) !important;}
+
+.page-settings .glass-card{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:20px !important;
+    box-shadow:var(--hard-lg) !important;
+}
+.page-settings .glass-card:hover{border-color:var(--ink) !important;box-shadow:6px 6px 0 var(--violet) !important;}
+
+.page-settings .card-title,
+.page-settings h1,
+.page-settings h2,
+.page-settings h3{color:var(--ink) !important;font-weight:900 !important;}
+.page-settings label,
+.page-settings .label,
+.page-settings p{color:var(--muted) !important;}
+
+.page-settings .card-title-icon{
+    background:var(--lime) !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.page-settings .card-title-icon svg{color:var(--ink) !important;}
+
+.page-settings .input-box,
+.page-settings input,
+.page-settings select{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+}
+.page-settings input::placeholder{color:var(--muted) !important;}
+.page-settings .input-box:focus-within,
+.page-settings input:focus{
+    border-color:var(--ink) !important;
+    box-shadow:3px 3px 0 var(--lime) !important;
+}
+.page-settings .input-action{
+    background:#f1ecfb !important;
+    border:2px solid var(--ink) !important;
+    color:var(--ink) !important;
+}
+.page-settings .input-action:hover{background:var(--lime) !important;color:var(--ink) !important;}
+
+.page-settings .btn-purple,
+.page-settings .btn-save,
+.page-settings .btn-blue{
+    background:linear-gradient(100deg,var(--magenta),var(--violet)) !important;
+    border:2.5px solid var(--ink) !important;
+    color:#fff !important;
+    box-shadow:4px 4px 0 var(--ink) !important;
+}
+.page-settings .btn-purple:hover:not(:disabled){
+    filter:none !important;
+    transform:translate(-1px,-1px) !important;
+    box-shadow:6px 6px 0 var(--ink) !important;
+}
+
+.page-settings .badge-status{
+    background:var(--lime) !important;
+    border:2px solid var(--ink) !important;
+    color:var(--ink) !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.page-settings .info-note,
+.page-settings .message-box{
+    background:#f7f2ff !important;
+    border:2px dashed var(--violet) !important;
+    border-radius:14px !important;
+    color:#4c1d95 !important;
+}
+.page-settings .user-chip{
+    background:var(--violet) !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+    color:#fff !important;
+}
+.page-settings .user-chip,
+.page-settings .user-chip *{color:#fff !important;}
+.page-settings .user-chip strong{color:var(--lime) !important;}
+.page-settings .readonly,
+.page-settings .detected-host,
+.page-settings .value{color:var(--violet) !important;}
+.page-settings a{color:var(--violet) !important;}
+
+/* ---------------------------------------------------------- SUBSCRIPTION */
+.sub-box{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:18px !important;
+    box-shadow:var(--hard) !important;
+}
+.sub-label{color:var(--muted) !important;}
+.sub-input{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+    color:var(--ink) !important;
+}
+.sub-chip{
+    background:#fff !important;
+    border:2px solid var(--ink) !important;
+    border-radius:8px !important;
+    color:var(--ink) !important;
+    font-weight:800 !important;
+    padding:3px 8px !important;
+}
+.sub-chip.soft{background:var(--lime) !important;color:var(--ink) !important;}
+.sub-meta{display:flex !important;flex-wrap:wrap !important;gap:10px !important;}
+
+.config{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:16px !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+}
+.config:hover{border-color:var(--ink) !important;background:#fdfbff !important;box-shadow:5px 5px 0 var(--violet) !important;}
+.config-title{color:var(--ink) !important;font-weight:900 !important;}
+.config-tag,
+.config-desc{color:var(--muted) !important;}
+
+.section-title{color:var(--ink) !important;font-weight:900 !important;}
+
+.circle-inner,
+.circle-center{
+    background:#fff !important;
+    border:3px solid var(--ink) !important;
+    box-shadow:4px 4px 0 var(--lime) !important;
+}
+.circle-percent{color:var(--ink) !important;text-shadow:none !important;}
+.circle-label{color:var(--muted) !important;}
+.ring-bg{stroke:#ece6f8 !important;}
+
+.graph-box{
+    background:#fbf8ff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:16px !important;
+}
+.graph{
+    background:
+        linear-gradient(rgba(13,11,16,.12) 2px,transparent 2px),
+        linear-gradient(90deg,rgba(13,11,16,.10) 2px,transparent 2px),
+        #ffffff !important;
+    background-size:100% 30px,50px 100%,auto !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:12px !important;
+}
+.graph-labels,
+.graph-note{color:var(--muted) !important;}
+.graph-total{color:var(--ink) !important;}
+.graph-dot{background:var(--magenta) !important;box-shadow:0 0 0 2px var(--ink) !important;}
+
+.stat-icon{background:var(--lime) !important;}
+
+.btn{color:var(--ink) !important;}
+.action{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    color:var(--ink) !important;
+    box-shadow:3px 3px 0 var(--ink) !important;
+}
+.action:hover{background:var(--lime) !important;color:var(--ink) !important;}
+.action.purple{background:#fff !important;color:var(--violet) !important;}
+.action.purple:hover{background:var(--violet) !important;color:#fff !important;}
+.small-copy,.small-qr{color:var(--ink) !important;background:#fff !important;border:2px solid var(--ink) !important;box-shadow:2px 2px 0 var(--ink) !important;}
+.small-qr{background:var(--lime) !important;}
+.creator-link{color:var(--violet) !important;}
+.qr-close{color:#fff !important;}
+.lang-btn{
+    background:#fff !important;
+    border:2px solid var(--ink) !important;
+    color:var(--ink) !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+
+/* قاب QR: سفید خالص می‌ماند تا اسکن بدون خطا انجام شود */
+.sub-qr-frame{
+    border:2.5px solid var(--ink) !important;
+    box-shadow:4px 4px 0 var(--lime) !important;
+    background:#fff !important;
+}
+.sub-qr-cap{color:var(--muted) !important;}
+
+/* مودال QR */
+#qrModal{background:rgba(58,10,92,.62) !important;backdrop-filter:blur(5px) !important;}
+.qr-box{
+    background:#fff !important;
+    border:3px solid var(--ink) !important;
+    box-shadow:8px 8px 0 var(--lime) !important;
+}
+
+/* ------------------------------------------------------------- SCROLLBAR */
+::-webkit-scrollbar{width:11px;height:11px;}
+::-webkit-scrollbar-track{background:#f1ecfb;}
+::-webkit-scrollbar-thumb{background:var(--ink);border-radius:99px;border:2px solid #f1ecfb;}
+::-webkit-scrollbar-thumb:hover{background:var(--violet);}
+
+/* ------------------------------------------------------------------ LOGIN */
+.login-top{
+    background:#fff !important;
+    border:3px solid var(--ink) !important;
+    border-radius:18px !important;
+    box-shadow:var(--hard-lg) !important;
+}
+.login-brand .mark{border:2.5px solid var(--ink) !important;box-shadow:3px 3px 0 var(--lime) !important;border-radius:14px !important;}
+.login-ribbon{border:2px solid var(--ink) !important;border-radius:12px !important;background:#fbf8ff !important;}
+.login-ribbon b{color:var(--ink) !important;}
+.login-ribbon .dot{background:var(--lime) !important;box-shadow:0 0 0 2px var(--ink) !important;}
+
+.auth-card{
+    background:#fff !important;
+    border:3px solid var(--ink) !important;
+    border-radius:24px !important;
+    box-shadow:8px 8px 0 var(--violet) !important;
+    backdrop-filter:none !important;
+}
+.auth-card:before,
+.auth-card:after{display:none !important;content:none !important;}
+
+.auth-logo{border:3px solid var(--ink) !important;box-shadow:4px 4px 0 var(--lime) !important;border-radius:18px !important;background:#fff !important;}
+.auth-head h1{color:var(--ink) !important;font-weight:900 !important;}
+.auth-head p{color:var(--muted) !important;}
+.auth-head .pill{
+    background:var(--lime) !important;
+    border:2px solid var(--ink) !important;
+    color:var(--ink) !important;
+    border-radius:9px !important;
+    font-weight:800 !important;
+}
+.auth-field .lbl{color:var(--muted) !important;}
+.auth-input{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:13px !important;
+    color:var(--ink) !important;
+    box-shadow:2px 2px 0 var(--ink) !important;
+}
+.auth-input:focus-within{border-color:var(--ink) !important;box-shadow:3px 3px 0 var(--lime) !important;}
+.auth-input input{color:var(--ink) !important;}
+.auth-input input::placeholder{color:var(--muted) !important;}
+.auth-input svg{color:var(--violet) !important;}
+.auth-eye{color:var(--ink) !important;}
+.auth-row{color:var(--dim) !important;}
+.auth-submit{
+    background:linear-gradient(100deg,var(--magenta),var(--violet)) !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:13px !important;
+    color:#fff !important;
+    font-weight:900 !important;
+    box-shadow:4px 4px 0 var(--ink) !important;
+}
+.auth-submit:hover{filter:none !important;transform:translate(-1px,-1px) !important;box-shadow:6px 6px 0 var(--ink) !important;}
+.auth-note{
+    background:#f7f2ff !important;
+    border:2px dashed var(--violet) !important;
+    border-radius:12px !important;
+    color:#4c1d95 !important;
+}
+.auth-note b,.auth-note strong{color:var(--violet) !important;}
+.auth-error{
+    background:#fff0f4 !important;
+    border:2px solid #e11d48 !important;
+    border-radius:12px !important;
+    color:#9f1239 !important;
+}
+.auth-dock{
+    background:#fff !important;
+    border:2.5px solid var(--ink) !important;
+    border-radius:14px !important;
+    box-shadow:4px 4px 0 var(--cyanpop) !important;
+    color:var(--dim) !important;
+}
+.auth-dock b{color:var(--ink) !important;}
+.auth-dock .dot{background:var(--lime) !important;box-shadow:0 0 0 2px var(--ink) !important;}
+.login-foot{color:var(--muted) !important;}
+
+/* دکمهٔ اصلی مودال‌ها: گرادیان صورتی→بنفش (با اولویت بالاتر از استایل داخلی) */
+html body .modal .btn.btn-blue,
+html body .modal #addBtnSubmit,
+html body .modal .btn.primary,
+html body .modal button[type="submit"].btn-blue{
+    background:linear-gradient(100deg,var(--magenta),var(--violet)) !important;
+    border:2.5px solid var(--ink) !important;
+    color:#fff !important;
+    box-shadow:4px 4px 0 var(--ink) !important;
+}
+html body .modal .btn.btn-blue span{color:#fff !important;}
+
+/* همهٔ نسخه‌های preset سفید و یکدست */
+.preset.special,
+.preset.recommended,
+.preset.rec{background:#fff !important;color:var(--violet) !important;border-color:var(--ink) !important;}
+.preset.active.special{background:var(--lime) !important;color:var(--ink) !important;}
+
+/* داک در حالت راست‌به‌چپ: گروه خروج به انتهای نوار می‌رود، نه روی آیتم‌ها */
+.sidebar .sidebar-bottom{
+    margin-left:0 !important;
+    margin-right:0 !important;
+    margin-inline-start:auto !important;
+}
+
+/* ------------------------- داک در موبایل: ۴ آیتم باید جا شوند ------------------------- */
+@media (max-width:820px){
+    :root{--g-dock-h:88px;}
+
+    .sidebar{
+        gap:5px !important;
+        padding:8px 9px !important;
+        overflow-x:auto !important;
+        -webkit-overflow-scrolling:touch;
+    }
+    .sidebar::-webkit-scrollbar{display:none !important;}
+    .sidebar .brand-logo{width:34px !important;height:34px !important;border-radius:11px !important;}
+
+    .sidebar .nav-item{
+        min-width:62px !important;
+        max-width:74px !important;
+        padding:7px 5px !important;
+        gap:5px !important;
+        border-radius:13px !important;
+    }
+    .sidebar .nav-text b{font-size:8.5px !important;letter-spacing:.2px !important;}
+    .sidebar .nav-icon{width:28px !important;height:28px !important;border-radius:9px !important;}
+    .sidebar .nav-icon svg{width:15px !important;height:15px !important;}
+
+    .sidebar .sidebar-bottom .nav-item{min-width:52px !important;}
+    .sidebar .sidebar-bottom .nav-text{display:none !important;}
+}
+
+/* روی گوشی‌های باریک، نشان برند جای آیتم‌ها را می‌گیرد → مخفی می‌شود تا هر ۴ آیتم جا شوند */
+@media (max-width:480px){
+    .sidebar .brand{display:none !important;}
+    .sidebar{gap:4px !important;padding:7px 8px !important;}
+    .sidebar .nav-item{min-width:58px !important;max-width:68px !important;padding:6px 4px !important;}
+    .sidebar .nav-text b{font-size:8px !important;}
+}
+
+/* =========================================================================
+   لهجهٔ آبی روشن (CYANPOP) — پاشیده و به‌چشم‌آمدنی، نه غالب
+   ========================================================================= */
+
+/* ۱) اعداد: کارت‌های زوج آبی روشن، فرد لیمویی */
+.stats > .stat:nth-child(even) .stat-value,
+.g-metrics > .g-metric:nth-child(even) .g-metric-l strong{
+    background:linear-gradient(180deg,transparent 46%,var(--cyanpop) 46%,var(--cyanpop) 92%,transparent 92%) !important;
+}
+
+/* ۲) فوکوس جستجو و ورودی‌ها */
+.search-box:focus,
+.toolbar input[type="text"]:focus,
+.toolbar input[type="search"]:focus{
+    border-color:var(--ink) !important;
+    box-shadow:3px 3px 0 var(--cyanpop) !important;
+}
+
+/* ۳) تب‌ها: هاور آبی روشن، فعال همان لیمویی می‌ماند */
+.filter-tab:hover:not(.active){
+    color:#0b8ea6 !important;
+    background:color-mix(in srgb,var(--cyanpop) 22%,#fff) !important;
+}
+
+/* ۴) دکمه‌های سفید: سایهٔ هاور آبی روشن */
+.btn:hover{
+    box-shadow:4px 4px 0 var(--cyanpop) !important;
+}
+
+/* ۵) خط جداکنندهٔ عنوان بخش‌ها و نقطه‌های فهرست: لهجهٔ آبی */
+.g-head h2::before,
+.section-title h2::before{
+    background:var(--cyanpop) !important;
+}
+
+/* ۶) نشان‌های تعداد/وضعیت روی کارت‌ها */
+.g-tag,
+.g-chip{
+    border-color:var(--ink) !important;
+}
+
+/* ۷) نوار ریبون بالای صفحه: مقدار سوم آبی روشن */
+.topbar .g-ribbon-stats > div:nth-child(3) b{color:#0b8ea6 !important;}
+
+/* ۸) لینک‌ها و متن‌های تأکیدی داخل مودال */
+.modal .modal-sub strong,
+.modal .hint b{color:#0b8ea6 !important;}
+
+/* ۹) اسکرول‌بار و انتخاب متن: لهجهٔ آبی */
+::selection{background:var(--cyanpop);color:var(--ink);}
